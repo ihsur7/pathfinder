@@ -34,7 +34,7 @@ The Pathfinder CLI is a command-line interface program for finding the shortest 
 pip install -r requirements.txt
 ```
 
-3. Make sure you have Python 3.6 or higher installed on your system.
+3. Make sure you have Python 3.8 or higher installed on your system.
 
 ## Running the Program
 
@@ -58,7 +58,7 @@ The following commands are available in the Pathfinder CLI:
 
 - `setres`: Set the resolution for voxelization. Leave empty to use the default value (0.05). Recommended resolution is 0.05 and must be between 0 and 1. Must be set before loading a model.
 
-- `loadmodel`: Load a 3D model from an STL file and voxelize it. Currently, only STL files are supported. Must be loaded before picking input and output coordinates.
+- `loadmodel`: Load a 3D model from an STL file and voxelize it. Currently, only STL files are supported. Must be loaded before picking input and output coordinates. The program will ask for the path to the STL file. Provide the path to the STL file, e.g. if the file is in `C:/Users/<username>/model/Volume.stl`, input this path.
 
 - `pickio`: Pick input and output coordinates. Must be done after loading a model. Click on a face to select it. Press the relevant checkbox to ensure correct coordinates are selected. The arrow MUST be visible and facing away from the selected face. Press 'i' to select input coordinates. Press 'o' to select output coordinates. Press 'c' to clear selection. Press 'q' to exit selection mode.
 
@@ -70,7 +70,14 @@ The following commands are available in the Pathfinder CLI:
 
 - `run`: Run the algorithm to find the shortest path and calculate the number of joints and segments in the pipeline. Must be run after setting input and output coordinates. Must be run after setting the standard length of the pipe (optional).
 
-- `generatereport`: Generate a report with results and images of the pipeline. Must be run after running the algorithm. The report will be generated in the same directory as the program. The report will contain results and images of the pipeline. The report will be generated in PDF format if MikTeX is installed. Otherwise, it will be generated in Word format.
+- `generatereport`: Generate a report with results and images of the pipeline. Must be run after running the algorithm. The report will be generated in the same directory as input STL file inside `reports` folder (e.g. `path/to/stlfile/reports`) . The report will contain results and images of the pipeline, including a Bill of Materials (BOM) based on unit costs of piping. The report will be generated in PDF format if MikTeX is installed. Otherwise, it will be generated in Word format.
+
+  - *NOTE* The pricing information is based on the following assumptions:
+    - The piping is made of copper.
+    - The piping is 15mm in diameter.
+    - The unit cost of piping is $9.90 per meter.
+    - The unit cost of L joints is $2.75 per joint.
+    - The unit cost of T joints is $1.43 per joint.
 
 - `help`: Display available commands and their usage.
 
@@ -82,7 +89,7 @@ Follow these steps to use the Pathfinder CLI:
 
 1. Set the resolution for voxelization (optional). Use the `setres` command to set the resolution for voxelization. Leave empty to use the default value (0.05).
 
-2. Load a 3D model. Use the `loadmodel` command to load a 3D model from an STL file. Currently, only STL files are supported. The model must be loaded before picking input and output coordinates.
+2. Load a 3D model. Use the `loadmodel` command to load a 3D model from an STL file. Currently, only STL files are supported. The model will be voxelized using the resolution set in step 1. The voxelized model will not be displayed until the next step. 
 
 3. Pick input and output coordinates. Use the `pickio` command to interactively pick input and output coordinates from the loaded model. Click on a face to select it. Press the relevant checkbox to ensure correct coordinates are selected. The arrow MUST be visible and facing away from the selected face. Press 'i' to select input coordinates. Press 'o' to select output coordinates. Press 'c' to clear selection. Press 'q' to exit selection mode.
 
