@@ -1,8 +1,6 @@
 mdutils==1.5.1
-numpy==1.15.1
 numpy==1.20.1
 PVGeo==2.1.0
-PVGeo==2.1.0
-pypandoc==1.11
+pypandoc_binary==1.11
 pyvista==0.41.0
 trimesh==3.22.4
