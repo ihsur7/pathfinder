@@ -477,6 +477,11 @@ if __name__ == "__main__":
                              'The input and output points are L joints.', 'There are no obstacles in the pipeline.'])
             mdfile.new_paragraph()
             mdfile.new_header(level=1, title='Results')
+            mdfile.new_paragraph(f'The input coordinates are *{inp_loc[0]}*, *{inp_loc[1]}*, *{inp_loc[2]}*.')
+            mdfile.new_paragraph(f'Number of output coordinates: *{len(out_loc)}*')
+            for i in range(len(out_loc)):
+                mdfile.new_paragraph(f'Output coordinates {i+1}: *{out_loc[i][0]}*, *{out_loc[i][1]}*, *{out_loc[i][2]}*.')
+            mdfile.new_paragraph()
             mdfile.new_paragraph('The following are the results of the shortest path between the input and output points.')
             mdfile.new_paragraph(f'**Number of L joints:** *{mydict["L Joints"]}*')
             mdfile.new_paragraph(f'**Number of T joints:** *{mydict["T Joints"]}*')
