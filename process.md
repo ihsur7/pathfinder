@@ -1,10 +1,43 @@
 # Developer Coding Challenge - Pipeline Path Finder
+> *Author: Rushabh Patel*
+
+> *Date: 2023-07-22*
+
+## Table of Contents
+2. [Critical Assumptions](#critical-assumptions)
+3. [Main CLI](#main-cli)
+4. [Dijkstra Algorithm](#dijkstra-algorithm)
+5. [Plotter](#plotter)
+6. [Rationale for using a Voxel Representation](#rationale-for-using-a-voxel-representation)
+7. [Rationale for using Dijkstra's Algorithm](#rationale-for-using-dijkstras-algorithm)
+8. [Rationale for Pricing](#rationale-for-pricing)
+9. [Future Work](#future-work)
+10. [References](#references)
+
+## Critical Assumptions
+
+The challenge provided a 3D model and documentation containing geometry details, however, geometry details did not match the 3D model. Hence, 3D model was used as the source of truth for geometry details. As per the challenge description, the model units was assumed to be in Feet, which will be converted to SI units (mm) in the code. The following assumptions were made to complete this challenge:
+- The model was also assumed to be in the first quadrant of the Cartesian coordinate system, with the origin at the bottom left corner of the model. 
+- The model was also assumed to be a closed manifold, with no holes or gaps in the geometry. 
+- The model was also assumed to be a single part, with no separate parts or components. 
+- The input and output locations were marked on the STL file provided by protrusions (cones), and the coordinates were extracted from the STL file.
+- The inputs and outputs were assumed to be on the surface of the protrusions, and not inside the model as the challenge description states.
+- In an ideal case, the protrusions would not exist, and there would be holes on the wall of the model. However, the protrusions were added to the model to make it easier to select input and output locations.
+- The centre of the protrusions was assumed to be the input and output locations.
+- The diameter of the piping was assumed to be 15mm (which is approximately the size of the voxel at the default resolution of 0.05) for cost calculation.
+- The piping was assumed to be made of copper for cost calculation.
+- The piping is attached to the input and output locations using L-joints. 
+- The size of voxel (mm/voxel) was calculated using the model's width in y-axis.
+
+Based on these assumptions, a Python program can be developed to find the shortest path between the input and output locations. The flow chart shown in Figure 1 illustrates the overall process of the pipeline path finder application.
+
+![Flow Chart of Python Program](./img/flowchart.png)
+
+## Main CLI
 
 The code provided is a Python script that serves as a Command Line Interface (CLI) for a Pathfinder application. It allows users to load 3D models, voxelizes them, pick input and output coordinates from the models, run the Dijkstra algorithm to find the shortest path between input and output points, and generate a report containing the results and images of the pipeline.
 
 A break down of the underlying process behind this code:
-
-## Main CLI
 
 1. **Importing Libraries**: The code begins by importing several Python libraries, including `sys`, `os`, `numpy`, `trimesh`, `PVGeo`, `warnings`, `math`, `mdutils`, `pypandoc`, `plotter`, and a custom module `dijkstra`.
 
@@ -126,7 +159,7 @@ Overall, the rationale for using a voxel model depends on the specific requireme
 
 ## Rationale for using Dijkstra's Algorithm
 
-The rationale for using Dijkstra's algorithm lies in its ability to find the shortest path between two nodes in a graph. It is a well-known algorithm that has been widely used in various fields, including computer science, mathematics, and engineering. It is also relatively simple to implement and has a low computational complexity, making it suitable for real-time applications. While the are other algorithms, such as A* (A-star), which may be more efficient in some cases, Dijkstra's algorithm is a good choice for this application due to its simplicity.
+The rationale for using Dijkstra's algorithm lies in its ability to find the shortest path between two nodes in a graph. It is a well-known algorithm that has been widely used in various fields, including computer science, mathematics, and engineering. It is also relatively simple to implement and has a low computational complexity, making it suitable for real-time applications. While the are other algorithms, such as A* (A-star), which may be more efficient in some cases, Dijkstra's algorithm is a good choice for this application due to its simplicity. My previous experience in developing 3D spacial algorithms also helped me to leverage the advantages of Dijkstra's algorithm to develop a practical solution for the pipeline path finder application. I have previously developed random-walk algorithm in 3D space with dynamic probabilities that affected the direction of the walk based on the properties of the surrounding voxels. This algorithm was used to simulate the diffusion of particles in 3D space.
 
 To analyze the time complexity of the given code, let's break down the major parts:
 
@@ -150,6 +183,21 @@ Overall, the time complexity of the entire code can be approximated as O(N + k),
 
 Keep in mind that the actual performance of the code will also depend on factors such as the size of the grid, the structure of the obstacles, and the efficiency of the Python interpreter. The time complexity analysis provides an estimate of the code's performance relative to the input size.
 
+## Rationale for Pricing
+
+The pricing for the pipeline path finder application is based on the following factors:
+
+1. The piping is made of copper.
+
+2. The piping is 15mm in diameter.
+
+3. The unit cost of piping is $9.90 per meter [3].
+
+4. The unit cost of L joints is $2.75 per joint [4].
+
+5. The unit cost of T joints is $1.43 per joint [5].
+
+
 ## Future Work
 1. **Implement A* Algorithm**: The A* algorithm is an extension of Dijkstra's algorithm that uses heuristics to improve performance. It is more efficient than Dijkstra's algorithm in many cases, especially when the shortest path is relatively short. Implementing the A* algorithm would be a good way to improve the performance of the pipeline path finder application.
 
@@ -157,7 +205,29 @@ Keep in mind that the actual performance of the code will also depend on factors
 
 3. **Implement a GUI**: The current implementation of the pipeline path finder application is a command-line interface (CLI). While this is a good way to interact with the application, it would be more user-friendly to implement a graphical user interface (GUI) using a Python GUI library such as Tkinter or PyQt. This would allow users to interact with the application using a graphical interface instead of typing commands in the terminal.
 
-4. **Improve Dijkstra Algorithm**: The current implementation of the Dijkstra algorithm is 
+4. **Improve Dijkstra Algorithm**: The current implementation of the Dijkstra algorithm is limited to one input and up to two outputs. It would be interesting to explore more advanced techniques for handling multiple inputs and outputs, where the algorithm can choose the best path based on certain criteria (e.g. shortest path, least number of joints, etc.) and can automatically decide the which input and output to use or which input and output to connect.
+
+5. **Improve cost calculations**: The current value for the cost of the piping is based on the length of the pipes only. However, this can be further improved by find an average cost of piping based on diameter. The program can then be improved to ask user for the diameter of piping to be used, and calculate the cost based on the average cost of piping for that diameter *and* the length of the pipes. Conduct further research to obtain a better estimate of the cost of piping.
+
+6. **Implement a non-voxel or mesh-based approach**: The current implementation of the pipeline path finder application uses a voxel-based approach to represent the 3D model. However, it would be interesting to explore other approaches such as mesh-based or point cloud-based representations. This would allow the application to handle more complex geometries and provide more accurate results.
+
+6. **Improve code to handle edge-cases**: The code can be further improved to handle edge-cases such as:
+    1. **File Loading**: The code loads an STL file for voxelization. Edge cases to consider here are:
+        - The file loaded might not be an STL file or could be corrupt, causing unexpected behavior. Proper error handling and file format validation should be implemented.
+
+    2. **Input and Output Coordinates**: The code allows the user to set input and output coordinates interactively or manually. Edge cases to consider are:
+        - The input and output coordinates selected might be outside the voxel grid's boundaries. The code should validate that the provided coordinates are within the bounds of the grid and handle out-of-bound cases accordingly.
+
+    3. **Resolution Setting**: The code allows the user to set the resolution for voxelization. Edge cases to consider are:
+        - The resolution setting might be done after loading a model. If this happens, the code should inform the user that they need to reload the model to apply the new resolution setting.
+
+    4. **Pipeline Calculation**: The code uses the Dijkstra algorithm to find the shortest path and calculates the number of L joints, T joints, and pipe segments. Edge cases to consider are:
+        - The number of paths between the input and output coordinates could be more than two, which the code currently doesn't handle. The code should be updated to handle multiple paths between the input and output points properly.
+        - The code assumes specific conditions for L joints, T joints, and endpoints. If these assumptions are not met, the algorithm's results might be incorrect. The code should be updated to handle various joint types and endpoint conditions.
+
+    5. **Obstacle Handling**: The code currently represents obstacles as '1' in the voxel grid. If obstacles are represented differently or if there are multiple types of obstacles, the code should be modified to handle different obstacle representations correctly.
+
+By addressing these edge cases, the code can provide a more robust and reliable Command Line Interface (CLI) for the Pathfinder application.
 
 ## References
 
@@ -165,3 +235,9 @@ Keep in mind that the actual performance of the code will also depend on factors
 
 [2] Y. Yamada, Y. Teraoka, An optimal design of piping route in a CAD system for power plant,
 Computers & Mathematics with Applications, Volume 35, Issue 6, 1998, Pages 137-149, ISSN 0898-1221, https://doi.org/10.1016/S0898-1221(98)00025-X.
+
+[3] Smart Water, Copper tubing 15mm, n.d., https://smart-water.com.au/product/copper-tubing-per-meter 
+
+[4] Plumbing Sales, 15mm Elbow 90 Deg Water Copper Press 1/2", n.d., https://plumbingsales.com.au/copper-tube-fittings/kempress-water/elbows-kempress-water/15mm-elbow-90-degree-f-f-kempress-water.html
+
+[5] Plumbing Sales, 15mm 1/2" Copper Tee Equal Capillary W24, n.d., https://plumbingsales.com.au/copper-tube-fittings/copper-capillary-fittings/copper-tees/15mm-1-2-copper-tee-equal-capillary-w24.html
