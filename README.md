@@ -7,9 +7,9 @@
 - **Date**: 2023-07-22
 - **Version**: 1.0
 
-# Table of Contents
+## Table of Contents
 
-## Pathfinder CLI - User Guide
+### Pathfinder CLI - User Guide
 
 1. [Overview](#overview)
 2. [Installation](#installation)
@@ -20,14 +20,14 @@
    - [Note](#note)
 5. [Conclusion](#conclusion)
 
-## Voxel Model Visualization with PyVista - Installation and Running Instructions for Plotter.py
+### Voxel Model Visualization with PyVista - Installation and Running Instructions for Plotter.py
 
 1. [Overview](#overview-1)
 2. [Installation](#installation-1)
 3. [Running the Visualization Tool](#running-the-visualization-tool)
 4. [Conclusion](#conclusion-1)
 
-## Dijkstra Algorithm in 3D
+### Dijkstra Algorithm in 3D
 
 1. [Usage](#usage-1)
 2. [Example](#example)
