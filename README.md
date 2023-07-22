@@ -1,5 +1,12 @@
 # Pathfinder CLI - User Guide
 
+
+## Author and Version
+
+- **Author**: Rushabh Patel
+- **Date**: 2023-07-22
+- **Version**: 1.0
+
 # Table of Contents
 
 ## Pathfinder CLI - User Guide
@@ -20,9 +27,20 @@
 3. [Running the Visualization Tool](#running-the-visualization-tool)
 4. [Conclusion](#conclusion-1)
 
+## Dijkstra Algorithm in 3D
+
+1. [Usage](#usage-1)
+2. [Example](#example)
+3. [Note](#note-1)
+
+
 ## Overview
 
 The Pathfinder CLI is a command-line interface program for finding the shortest path between two points in a 3D model represented as an STL file. It uses the Dijkstra algorithm to calculate the shortest path and provides information about the number of L joints, T joints, and piping segments in the pipeline.
+
+## Prerequisites
+
+The Pathfinder CLI requires Python 3.8 or higher to run.
 
 ## Installation
 
@@ -137,6 +155,8 @@ Follow these steps to use the Pathfinder CLI:
 
 The Pathfinder CLI provides a convenient way to find the shortest path between two points in a 3D model and calculate the number of joints and segments in the pipeline. It offers an interactive interface for picking input and output coordinates and generates a detailed report with the results and images of the pipeline.
 
+---
+
 # Voxel Model Visualization with PyVista - Installation and Running Instructions for Plotter.py
 
 ## Overview
@@ -235,3 +255,62 @@ Once the visualization is displayed, you can interact with it in the following w
 ## Conclusion
 
 The interactive Voxel Model Visualization tool provides an intuitive way to visualize 3D voxel models and interact with them in real-time. By following the installation and running instructions provided in this document, you can easily use the tool to explore and analyze your own voxel data. Happy visualizing!
+
+---
+
+# Dijkstra Algorithm in 3D
+
+This Python script implements Dijkstra's algorithm to find the shortest path between two nodes in a 3D grid. The script uses a voxel-based approach, where each node in the grid represents a 3D coordinate (x, y, z). The algorithm works by exploring adjacent nodes and updating their distances if a shorter path is found.
+
+## Usage
+
+1. Import the required libraries and functions:
+
+```python
+import numpy as np
+```
+
+2. Set the `debug` variable to `True` if you want to print debug information during execution, or `False` otherwise.
+
+3. The script defines several helper functions:
+
+   - `valid_node(node, size_of_grid)`: Checks if a given node is valid within the specified grid.
+   - `x_up(node)`, `x_down(node)`, `y_up(node)`, `y_down(node)`, `z_up(node)`, `z_down(node)`: These functions return the nodes above, below, right, left, in front, and behind the given node along the x, y, and z axes, respectively.
+   - `backtrack(initial_node, desired_node, distances)`: Backtracks the path from the desired node to the initial node based on the calculated distances.
+
+4. The main function is `dijkstra(initial_node, desired_node, obstacles)`. It takes three arguments:
+
+   - `initial_node`: The initial node in the grid (coordinates as [x, y, z]).
+   - `desired_node`: The desired node in the grid (coordinates as [x, y, z]).
+   - `obstacles`: A list of obstacles in the grid. The script handles obstacles by converting them to a large value (1000) and adding 1 to avoid them while calculating the shortest path.
+
+5. Run the `dijkstra` function with the desired input values to find the shortest path between the initial and desired nodes.
+
+## Example
+
+Here's an example of how to use the `dijkstra` function:
+
+```python
+# Sample obstacle grid (Replace this with your actual obstacle grid)
+obstacles = np.zeros((5, 5, 5), dtype=int)
+obstacles[2, 2, 1] = 1
+obstacles[2, 1, 1] = 1
+obstacles[2, 3, 1] = 1
+obstacles[2, 2, 2] = 1
+
+# Set the initial and desired nodes
+initial_node = [0, 0, 0]
+desired_node = [4, 4, 4]
+
+# Find the shortest path
+path = dijkstra(initial_node, desired_node, obstacles)
+print("Shortest Path:", path)
+```
+
+## Note
+
+- Ensure that the obstacle grid and node coordinates are valid and within the grid boundaries. The script may not handle invalid inputs.
+
+- The `backtrack` function constructs the shortest path in reverse, starting from the desired node and backtracking through nodes with decreasing distances until reaching the initial node.
+
+- The script prints the number of iterations taken by the algorithm to find the shortest path.

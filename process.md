@@ -1,18 +1,62 @@
 # Developer Coding Challenge - Pipeline Path Finder
-> *Author: Rushabh Patel*
 
-> *Date: 2023-07-22*
+> *Rushabh Patel*
+
+> *2023-07-22*
+
 
 ## Table of Contents
-2. [Critical Assumptions](#critical-assumptions)
-3. [Main CLI](#main-cli)
-4. [Dijkstra Algorithm](#dijkstra-algorithm)
-5. [Plotter](#plotter)
-6. [Rationale for using a Voxel Representation](#rationale-for-using-a-voxel-representation)
-7. [Rationale for using Dijkstra's Algorithm](#rationale-for-using-dijkstras-algorithm)
-8. [Rationale for Pricing](#rationale-for-pricing)
-9. [Future Work](#future-work)
-10. [References](#references)
+1. [Problem Statement](#problem-statement)
+2. [Testing](#testing)
+3. [Challenges Faced](#challenges-faced)
+4. [Critical Assumptions](#critical-assumptions)
+5. [Main CLI](#main-cli)
+6. [Dijkstra Algorithm](#dijkstra-algorithm)
+7. [Plotter](#plotter)
+8. [Rationale for using a Voxel Representation](#rationale-for-using-a-voxel-representation)
+9. [Rationale for using Dijkstra's Algorithm](#rationale-for-using-dijkstras-algorithm)
+10. [Rationale for Pricing](#rationale-for-pricing)
+11. [Future Work](#future-work)
+12. [References](#references)
+
+## Problem Statement
+The goal of this challenge was to develop a way for a customer to automatically find routing for pipes/conduits through complex areas and volumes.
+
+## Testing
+The code was tested on a Windows 11 machine with Python 3.8.8 installed. The following Python libraries were used:
+
+- `sys`
+- `os`
+- `numpy`
+- `trimesh`
+- `PyVista`
+- `PVGeo`
+- `warnings`
+- `math`
+- `mdutils`
+- `pypandoc`
+
+The code was only tested with one specific STL file that was provided. It is not guaranteed to work with other STL files. The code was also tested with different input and output coordinates, and the results were verified. Certain edge-cases such as an output coinciding in the path of second output were tested, however, the current implementation does not account for it. 
+
+## Challenges Faced
+As with any technical problem, there were some challenges that I faced. However, I persevered and was able to overcome them. By applying proper research techniques and leveraging my previous experience, I was able to develop a practical solution for the pipeline path finder application. The following are some of the challenges I faced while completing this challenge:
+Approaching the "Pathfinder" problem may present several challenges, as follows:
+
+1. **Algorithm Complexity**: Implementing an efficient pathfinding algorithm, such as Dijkstra's algorithm, was challenging, especially for large-scale 3D models with complex structures. Optimizing the algorithm to handle large voxel grids while ensuring reasonable execution times is crucial. However, utilising my previous experience in developing 3D spacial algorithms and ability to conduct effective research, I was able to leverage the advantages of Dijkstra's algorithm to develop a practical solution for the pipeline path finder application.
+
+2. **Voxelization Accuracy**: Voxelizing a 3D model involves discretizing the geometry into small cubes (voxels). Ensuring accurate voxelization was essential to obtaining correct paths and joint calculations. My previous experience in medical imaging helped me to leverage the advantages of voxel models to develop a practical solution for the pipeline path finder application.
+
+4. **Handling Multiple Paths**: Dealing with scenarios where there are multiple paths between the input and output locations was an intricate process. I was able to develop a program to determine the appropriate joints and segments to accommodate all paths effectively. I developed an effective mathematical approach to achieve this, for example, by utilising unit vectors to identify change in directions as well as using coordinate system to identify position of paths relative to each other.
+
+5. **User Interaction**: Implementing a user-friendly command-line interface (CLI) that allows users to load models, set input/output locations, and interpret results was also challenging process. Ensuring clear instructions and error handling for user inputs was essential. I was able to develop a robust CLI that allows users to interactively analyze 3D models, calculate pipeline paths, and generate informative reports based on the results.
+
+6. **Edge Cases**: Identifying and handling edge cases, such as selecting input/output locations anywhere on the surface of the model required careful consideration and a meticulous approach to ensure the program behaves as expected. I was able to develop a robust solution that handles various edge cases and provides informative error messages to the user.
+
+7. **Visualization**: Developing a robust and intuitive visualization of the voxelized points and paths was complex. I developed visualization tool that makes it easy for users to explore and interact with voxel models.
+
+9. **Documentation**: Creating clear and well-structured documentation that explains the code, algorithms, and program functionality is critical for easy transfer of knowledge. I ensured my code was well-documented with clear instructions to enhance readability and help others understand the implementation.
+
+Addressing these challenges and developing a robust and efficient solution demonstrates my problem-solving skills and software engineering abilities, which can greatly enhance the outcome for your clients at Tandm/ACADS-BSG.
 
 ## Critical Assumptions
 
@@ -28,6 +72,7 @@ The challenge provided a 3D model and documentation containing geometry details,
 - The piping was assumed to be made of copper for cost calculation.
 - The piping is attached to the input and output locations using L-joints. 
 - The size of voxel (mm/voxel) was calculated using the model's width in y-axis.
+- Travelling around the object in any direction was assumed to be possible.
 
 Based on these assumptions, a Python program can be developed to find the shortest path between the input and output locations. The flow chart shown in Figure 1 illustrates the overall process of the pipeline path finder application.
 
@@ -211,7 +256,11 @@ The pricing for the pipeline path finder application is based on the following f
 
 6. **Implement a non-voxel or mesh-based approach**: The current implementation of the pipeline path finder application uses a voxel-based approach to represent the 3D model. However, it would be interesting to explore other approaches such as mesh-based or point cloud-based representations. This would allow the application to handle more complex geometries and provide more accurate results.
 
-6. **Improve code to handle edge-cases**: The code can be further improved to handle edge-cases such as:
+7. **Verify voxelisation accuracy**: Verify the accuracy of the voxelization process by loading a known 3D model, voxelizing it, and comparing the resulting voxel grid with the expected output. This would ensure that the voxelization process is working correctly and producing accurate results.
+
+8. **Explore resolution impact**: Test the impact of different voxelization resolutions on the pathfinding results and joint calculations. This will ensure the program behaves as expected for various resolution values.
+
+9. **Improve code to handle edge-cases**: The code can be further improved to handle edge-cases such as:
     1. **File Loading**: The code loads an STL file for voxelization. Edge cases to consider here are:
         - The file loaded might not be an STL file or could be corrupt, causing unexpected behavior. Proper error handling and file format validation should be implemented.
 
