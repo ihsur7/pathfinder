@@ -98,13 +98,15 @@ Follow these steps to use the Pathfinder CLI:
 
      <img src="img/output_select_example.png" alt="Output Select Example" width="400">
 
-4. Set input and output coordinates manually (optional). Alternatively, you can set input and output coordinates manually using the `setinput` and `setoutput` commands. Provide the coordinates as "x,y,z" for single points or "x1,y1,z1,x2,y2,z2,..." for multiple points.
+4. Set input and output coordinates manually (optional, not recommended). Alternatively, you can set input and output coordinates manually using the `setinput` and `setoutput` commands. Provide the coordinates as "x,y,z" for single points or "x1,y1,z1,x2,y2,z2,..." for multiple points.
 
 5. Set the standard length of the pipe (optional). Use the `standardlength` command to set the standard length of the pipe in millimeters (mm). If not set, the total length of pipe to purchase will be provided in the report.
 
 6. Run the algorithm. Use the `run` command to run the algorithm and find the shortest path between the input and output points. The algorithm will calculate the number of L joints, T joints, and piping segments in the pipeline.
 
 7. Generate a report. Use the `generatereport` command to generate a report with the results and images of the pipeline. The report will be generated in the same directory as the program.
+
+    - Example report can be found here - [Report](report_example.pdf)
 
 8. Exit the program. Use the `exit` command to exit the program.
 
